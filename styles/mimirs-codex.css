@@ -1,0 +1,24 @@
+.mimir-ui-content {
+    padding: 10px;
+  }
+  
+  #refresh-button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  #refresh-button:hover {
+    background-color: #45a049;
+  }
+  
+  .mimirs-codex-btn {
+    margin: 5px;
+    padding: 5px;
+    background-color: #444;
+    color: #fff;
+    border-radius: 5px;
+  }
+  
