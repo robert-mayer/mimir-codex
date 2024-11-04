@@ -4,15 +4,19 @@
 console.log("Mimir's Codex module loaded!");
 
 // Initialization hook that runs when Foundry VTT is ready
-Hooks.once('ready', () => {
-  console.log("Mimir's Codex is now active!");
-  // Add a button to the control bar to open the UI
-  let button = $('<button class="mimirs-codex-btn">Mimir\'s Codex</button>');
-  button.on('click', () => {
-    new MimirsCodexApp().render(true);
-  });
-  $('#sidebar').prepend(button);
-});  
+Hooks.on("renderSidebarTab", async (app, html) => {
+  if (app instanceof JournalDirectory) {
+    let button = $("<button class='action-buttons theme-light'><i class='fas fa-book'></i> Mimir's Codex</button>")
+
+    button.click(function () {
+      new MimirsCodexApp().render(true);
+    });
+
+    // Append the button to the footer of the Journal directory
+    html.find(".directory-footer").append(button);
+  }
+});
+
 
 
 class MimirsCodexApp extends Application {
