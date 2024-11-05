@@ -66,9 +66,10 @@ class MimirsCodexApp extends Application {
             content: this.lastResponse, 
             speaker: {
               alias: "Mimir",
+              avatar: "modules/mimirs-codex/media/mimir-avatar-image.png"
             },
             type: CONST.CHAT_MESSAGE_TYPES.IC,
-            avatar: "modules/mimirs-codex/media/mimir-avatar-image.png"
+            
           });
         } else {
           ui.notifications.warn("No response available to send to chat.");

@@ -40,4 +40,4 @@ export function registerSettings() {
         restricted: true
     });
 
-  }
+}
