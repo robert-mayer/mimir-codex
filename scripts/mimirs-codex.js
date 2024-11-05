@@ -3,21 +3,13 @@
 // Display a console message to confirm the script is loaded
 console.log("Mimir's Codex module loaded!");
 
+import { registerSettings } from "./settings.js";
 
-//Create Module Settings
 Hooks.once("init", () => {
-  game.settings.register("mimirs-codex", "apiKey", {
-      name: "OpenAI API Key",
-      hint: "Enter your OpenAI API key to enable the AI assistant.",
-      scope: "world", // Ensures all users in this world share the same API key
-      config: true, // Shows this setting in the module configuration UI
-      type: String,
-      default: "",
-      restricted: true,
-      secret: true,
-      onChange: value => console.log("API Key updated:", value)
-  });
+  console.log("Mimir's Codex module initialized");
+  registerSettings();
 });
+
 
 
 // Initialization hook that runs when Foundry VTT is ready
@@ -107,11 +99,21 @@ class MimirsCodexApp extends Application {
           return "API key not set. Please configure the API key in module settings.";
       }
 
+      const expertRole = game.settings.get("mimirs-codex", "expertRole");
+
+      let systemMessage;
+      if (expertRole === "loreExpert") {
+        systemMessage = "You are a knowledgeable D&D assistant with detailed knowledge of Greyhawk, Ghosts of Saltmarsh, and the custom campaign setting. Answer questions in a way that is consistent with Greyhawk lore and the story arcs of this campaign.";
+      } else if (expertRole === "ruleExpert") {
+        systemMessage = "You are an expert in D&D 5e rules, mechanics, and interpretations. Answer questions with precise rules clarifications and examples based on the D&D 5e ruleset.";
+      }
+      
+
       const url = "https://api.openai.com/v1/chat/completions";
       const body = {
           model: "gpt-4o-mini",
           messages: [
-              { role: "system", content: "You are a knowledgeable D&D assistant with detailed knowledge of Greyhawk, Ghosts of Saltmarsh, and the custom campaign setting. Answer questions in a way that is consistent with Greyhawk lore and the story arcs of this campaign." },
+              { role: "system", content: systemMessage },
               { role: "user", content: prompt }
           ],
           max_tokens: 300,
