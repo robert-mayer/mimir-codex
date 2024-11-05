@@ -25,24 +25,30 @@ class MimirsCodexApp extends Application {
   }
 
   static get defaultOptions() {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       id: "mimirs-codex",
       title: "Mimir's Codex",
       template: "modules/mimirs-codex/templates/mimir_ui.html",
       width: 400,
       height: 300,
-      resizable: true,
+      resizable: false,
       classes: ["mimirs-codex-app"]
     });
   }
 
   activateListeners(html) {
     super.activateListeners(html);
-    html.find("#refresh-button").click(this._onRefreshNotes.bind(this));
-  }
+    html.find("#refresh-button").click((event) => {
+        event.preventDefault(); // Prevent any default action
+        this._onRefreshNotes();
+        event.currentTarget.blur(); // Remove focus from the button
+    });
+}
+
 
   _onRefreshNotes() {
     console.log("Notes refreshed!");
-    ui.notifications.info("Notes have been refreshed!");
+    ui.notifications.info("Mimir's Codex has been refreshed!");
   }
 }
+

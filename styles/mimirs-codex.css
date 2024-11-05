@@ -1,16 +1,17 @@
-.mimir-ui-content {
-    padding: 10px;
+ 
+  #refresh-button {
+    border: 2px groove;
+    padding: 1px;
+    cursor: pointer;
+ } 
+    
+  .mimir-ui-content h2 {
+    font-size: 1.5em; /* Adjust font size if needed */
+    color: black; /* Use Foundry's color system if desired */
   }
   
-  #refresh-button {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 10px;
+  #import-button {
+    border: 2px groove;
+    padding: 1px;
     cursor: pointer;
   }
-  
-  #refresh-button:hover {
-    background-color: #45a049;
-  }
-  
