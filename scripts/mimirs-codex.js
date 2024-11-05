@@ -3,6 +3,21 @@
 // Display a console message to confirm the script is loaded
 console.log("Mimir's Codex module loaded!");
 
+
+//Create Module Settings
+Hooks.once("init", () => {
+  game.settings.register("mimirs-codex", "apiKey", {
+      name: "OpenAI API Key",
+      hint: "Enter your OpenAI API key to enable the AI assistant.",
+      scope: "world", // Ensures all users in this world share the same API key
+      config: true, // Shows this setting in the module configuration UI
+      type: String,
+      default: "",
+      onChange: value => console.log("API Key updated:", value)
+  });
+});
+
+
 // Initialization hook that runs when Foundry VTT is ready
 Hooks.on("renderSidebarTab", async (app, html) => {
   if (app instanceof JournalDirectory) {
@@ -17,51 +32,16 @@ Hooks.on("renderSidebarTab", async (app, html) => {
   }
 });
 
-
-
 class MimirsCodexApp extends Application {
-  constructor(options = {}) {
-    super(options);
-  }
-
-  static get defaultOptions() {
-    return foundry.utils.mergeObject(super.defaultOptions, {
-      id: "mimirs-codex",
-      title: "Mimir's Codex",
-      template: "modules/mimirs-codex/templates/mimir_ui.html",
-      width: 400,
-      height: 300,
-      resizable: false,
-      classes: ["mimirs-codex-app"]
-    });
-  }
-
-  activateListeners(html) {
-    super.activateListeners(html);
-    html.find("#refresh-button").click((event) => {
-        event.preventDefault(); // Prevent any default action
-        this._onRefreshNotes();
-        event.currentTarget.blur(); // Remove focus from the button
-    });
-}
-
-
-  _onRefreshNotes() {
-    console.log("Notes refreshed!");
-    ui.notifications.info("Mimir's Codex has been refreshed!");
-  }
-}
-
-class ChatGPTWindow extends Application {
   static get defaultOptions() {
       return foundry.utils.mergeObject(super.defaultOptions, {
-          id: "chatgpt-window",
+          id: "mimirs-codex",
           title: "Mimir's Codex AI Assistant",
-          template: "modules/mimirs-codex/templates/chat_window.html",
+          template: "modules/mimirs-codex/templates/mimir-chat-window.html",
           width: 500,
           height: 400,
           resizable: true,
-          classes: ["chatgpt-window"]
+          classes: ["mimirs-codex"]
       });
   }
 
@@ -81,11 +61,17 @@ class ChatGPTWindow extends Application {
 
           // Send message to OpenAI and display response
           const response = await this.getAIResponse(userInput);
-          this.addMessageToChat("AI Assistant", response);
+          this.addMessageToChat("Mimir", response);
       });
   }
 
   async getAIResponse(prompt) {
+      const apiKey = game.settings.get("mimirs-codex", "apiKey");
+      if (!apiKey) {
+          console.error("API key is not set. Please set it in the module settings.");
+          return "API key not set. Please configure the API key in module settings.";
+      }
+      
       try {
           const response = await fetch("https://api.openai.com/v1/completions", {
               method: "POST",
@@ -117,11 +103,3 @@ class ChatGPTWindow extends Application {
   }
 }
 
-// Add a button in the Journal sidebar to open the chat window
-Hooks.on("renderSidebarTab", (app, html) => {
-  if (app instanceof JournalDirectory) {
-      let button = $(`<button class="chatgpt-btn action-button theme-light"><i class="fas fa-robot"></i> Mimir's Codex</button>`);
-      button.click(() => new ChatGPTWindow().render(true));
-      html.find(".directory-footer").append(button);
-  }
-});
