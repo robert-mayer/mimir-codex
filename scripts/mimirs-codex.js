@@ -13,7 +13,9 @@ Hooks.once("init", () => {
       config: true, // Shows this setting in the module configuration UI
       type: String,
       default: "",
-      onChange: value => console.log("API Key updated:", value)
+      restricted: true,
+      onChange: value => console.log("API Key updated:", value),
+      secret: true
   });
 });
 
@@ -71,24 +73,40 @@ class MimirsCodexApp extends Application {
           console.error("API key is not set. Please set it in the module settings.");
           return "API key not set. Please configure the API key in module settings.";
       }
-      
+
+      const url = "https://api.openai.com/v1/chat/completions";
+      const body = {
+          model: "gpt-4o-mini",
+          messages: [
+              { role: "system", content: "You are a helpful assistant." },
+              { role: "user", content: prompt }
+          ],
+          max_tokens: 150,
+          temperature: 0.7
+      };
+
       try {
-          const response = await fetch("https://api.openai.com/v1/completions", {
+          const response = await fetch(url, {
               method: "POST",
               headers: {
                   "Content-Type": "application/json",
-                  "Authorization": `Bearer YOUR_API_KEY`
+                  "Authorization": `Bearer ${apiKey}`
               },
-              body: JSON.stringify({
-                  model: "text-davinci-003",
-                  prompt: prompt,
-                  max_tokens: 150,
-                  temperature: 0.7
-              })
-          });
+              body: JSON.stringify(body)
+            });
+
+          if (!response.ok) {
+              console.error(`Error: ${response.status} - ${response.statusText}`);
+              return `Error ${response.status}: ${response.statusText}`;
+          }
 
           const data = await response.json();
-          return data.choices[0].text.trim();
+          if (data.choices && data.choices[0] && data.choices[0].message) {
+            return data.choices[0].message.content.trim();
+          } else {
+            console.error("Unexpected response structure:", data);
+            return "An error occurred: unexpected response format.";
+          }
       } catch (error) {
           console.error("Error fetching AI response:", error);
           return "An error occurred while fetching the AI response.";
