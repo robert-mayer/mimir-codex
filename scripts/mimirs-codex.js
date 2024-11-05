@@ -104,7 +104,7 @@ class MimirsCodexApp extends Application {
 
       let systemMessage;
       if (expertRole === "loreExpert") {
-        systemMessage = "You are a knowledgeable D&D assistant with detailed knowledge of Greyhawk, Ghosts of Saltmarsh, and the custom campaign setting. Answer questions in a way that is consistent with Greyhawk lore and the story arcs of this campaign.";
+        systemMessage = "You are a knowledgeable D&D assistant with detailed knowledge of Greyhawk, Ghosts of Saltmarsh, and the custom campaign setting. Answer questions in a way that is consistent with Greyhawk lore and the story arcs of this campaign as well as avoiding meta references.";
       } else if (expertRole === "ruleExpert") {
         systemMessage = "You are an expert in D&D 5e rules, mechanics, and interpretations. Answer questions with precise rules clarifications and examples based on the D&D 5e ruleset.";
       }

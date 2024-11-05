@@ -6,14 +6,11 @@
     "author": "Ricky Bobby",
     "minimumCoreVersion": "10",
     "compatibleCoreVersion": "11",
-    "scripts": [
-        "scripts/mimirs-codex.js",
-        "scripts/settings.js"  
-      ],
     "type": "module",
     "styles": ["styles/mimirs-codex.css"],
     "esmodules": [
-      "scripts/mimirs-codex.js"
+      "scripts/mimirs-codex.js",
+      "scripts/settings.js" 
     ],
     "socket": true,
     "flags": {}
