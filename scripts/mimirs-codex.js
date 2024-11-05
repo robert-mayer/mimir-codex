@@ -52,20 +52,32 @@ class MimirsCodexApp extends Application {
 
       // Event listener for the Send button
       html.find("#send-button").click(async () => {
-          const userInput = html.find("#user-input").val();
-          if (userInput.trim() === "") return;
-
-          // Display user's message
-          this.addMessageToChat("You", userInput);
-
-          // Clear input field
-          html.find("#user-input").val("");
-
-          // Send message to OpenAI and display response
-          const response = await this.getAIResponse(userInput);
-          this.addMessageToChat("Mimir", response);
+          await this.sendMessage(html);
       });
-  }
+
+        // Event listener for Enter key press
+        html.find("#user-input").keydown(async (event) => {
+            if (event.key === "Enter") {
+                event.preventDefault(); // Prevents a new line
+                await this.sendMessage(html);
+            }
+        });
+    }
+
+  async sendMessage(html) {
+    const userInput = html.find("#user-input").val().trim();
+    if (userInput === "") return;
+
+    // Display user's message
+    this.addMessageToChat("You", userInput);
+
+    // Clear input field
+    html.find("#user-input").val("");
+
+    // Send message to OpenAI and display response
+    const response = await this.getAIResponse(userInput);
+    this.addMessageToChat("Mimir", response);
+    }
 
   async getAIResponse(prompt) {
       const apiKey = game.settings.get("mimirs-codex", "apiKey");
@@ -78,11 +90,11 @@ class MimirsCodexApp extends Application {
       const body = {
           model: "gpt-4o-mini",
           messages: [
-              { role: "system", content: "You are a helpful assistant." },
+              { role: "system", content: "You are a knowledgeable D&D assistant with detailed knowledge of Greyhawk, Ghosts of Saltmarsh, and the custom campaign setting. Answer questions in a way that is consistent with Greyhawk lore and the story arcs of this campaign." },
               { role: "user", content: prompt }
           ],
           max_tokens: 150,
-          temperature: 0.7
+          temperature: 0.5
       };
 
       try {
