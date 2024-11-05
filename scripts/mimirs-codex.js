@@ -11,7 +11,7 @@ Hooks.once("init", () => {
       hint: "Enter your OpenAI API key to enable the AI assistant.",
       scope: "world", // Ensures all users in this world share the same API key
       config: true, // Shows this setting in the module configuration UI
-      type: "password",
+      type: String,
       default: "",
       restricted: true,
       secret: true,
@@ -35,6 +35,11 @@ Hooks.on("renderSidebarTab", async (app, html) => {
 });
 
 class MimirsCodexApp extends Application {
+  constructor(options = {}) {
+    super(options);
+    this.lastResponse = "";
+
+  }
   static get defaultOptions() {
       return foundry.utils.mergeObject(super.defaultOptions, {
           id: "mimirs-codex",
@@ -56,12 +61,21 @@ class MimirsCodexApp extends Application {
       });
 
         // Event listener for Enter key press
-        html.find("#user-input").keydown(async (event) => {
-            if (event.key === "Enter") {
-                event.preventDefault(); // Prevents a new line
-                await this.sendMessage(html);
-            }
-        });
+      html.find("#user-input").keydown(async (event) => {
+          if (event.key === "Enter") {
+              event.preventDefault(); // Prevents a new line
+              await this.sendMessage(html);
+          }
+      });
+      
+      html.find("#send-to-chat").click(() => {
+        if (this.lastResponse) {
+          ChatMessage.create({ content: this.lastResponse });
+        } else {
+          ui.notifications.warn("No response available to send to chat.");
+        }
+      });
+
     }
 
   async sendMessage(html) {
@@ -93,7 +107,7 @@ class MimirsCodexApp extends Application {
               { role: "system", content: "You are a knowledgeable D&D assistant with detailed knowledge of Greyhawk, Ghosts of Saltmarsh, and the custom campaign setting. Answer questions in a way that is consistent with Greyhawk lore and the story arcs of this campaign." },
               { role: "user", content: prompt }
           ],
-          max_tokens: 150,
+          max_tokens: 300,
           temperature: 0.5
       };
 
@@ -114,7 +128,8 @@ class MimirsCodexApp extends Application {
 
           const data = await response.json();
           if (data.choices && data.choices[0] && data.choices[0].message) {
-            return data.choices[0].message.content.trim();
+            this.lastResponse = data.choices[0].message.content.trim()
+            return this.lastResponse;
           } else {
             console.error("Unexpected response structure:", data);
             return "An error occurred: unexpected response format.";
