@@ -70,7 +70,14 @@ class MimirsCodexApp extends Application {
       
       html.find("#send-to-chat").click(() => {
         if (this.lastResponse) {
-          ChatMessage.create({ content: this.lastResponse });
+          ChatMessage.create({ 
+            content: this.lastResponse, 
+            speaker: {
+              alias: "Mimir",
+            },
+            type: CONST.CHAT_MESSAGE_TYPES.IC,
+            avatar: "modules/mimirs-codex/media/mimir-avatar-image.png"
+          });
         } else {
           ui.notifications.warn("No response available to send to chat.");
         }
