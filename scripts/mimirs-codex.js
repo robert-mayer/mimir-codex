@@ -11,11 +11,11 @@ Hooks.once("init", () => {
       hint: "Enter your OpenAI API key to enable the AI assistant.",
       scope: "world", // Ensures all users in this world share the same API key
       config: true, // Shows this setting in the module configuration UI
-      type: String,
+      type: "password",
       default: "",
       restricted: true,
-      onChange: value => console.log("API Key updated:", value),
-      secret: true
+      secret: true,
+      onChange: value => console.log("API Key updated:", value)
   });
 });
 
@@ -127,7 +127,8 @@ class MimirsCodexApp extends Application {
 
   addMessageToChat(sender, message) {
       const chatHistory = this.element.find("#chat-history");
-      const newMessage = `<p><strong>${sender}:</strong> ${message}</p>`;
+      const messageClass = sender === "You" ? "user-message" : "ai-message";
+      const newMessage = `<p class="${messageClass}"><strong>${sender}:</strong> ${message}</p>`;
       chatHistory.append(newMessage);
       chatHistory.scrollTop(chatHistory[0].scrollHeight); // Scroll to bottom
   }
