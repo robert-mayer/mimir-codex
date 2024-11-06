@@ -104,7 +104,7 @@ class MimirsCodexApp extends Application {
 
       let systemMessage;
       if (expertRole === "loreExpert") {
-        systemMessage = "You are a knowledgeable D&D assistant with detailed knowledge of Greyhawk, Ghosts of Saltmarsh, and the custom campaign setting. Answer questions in a way that is consistent with Greyhawk lore and the story arcs of this campaign as well as avoiding meta references.";
+        systemMessage = "You are a knowledgeable D&D assistant with detailed knowledge of Greyhawk, Ghosts of Saltmarsh, and the custom campaign setting. Answer questions in a way that is consistent with Greyhawk lore and the story arcs of this campaign as well as avoiding meta references. Keep answers to 4 or 5 sentences.";
       } else if (expertRole === "ruleExpert") {
         systemMessage = "You are an expert in D&D 5e rules, mechanics, and interpretations. Answer questions with precise rules clarifications and examples based on the D&D 5e ruleset.";
       }
@@ -117,7 +117,7 @@ class MimirsCodexApp extends Application {
               { role: "system", content: systemMessage },
               { role: "user", content: prompt }
           ],
-          max_tokens: 300,
+          max_tokens: 500,
           temperature: 0.5
       };
 
@@ -140,6 +140,7 @@ class MimirsCodexApp extends Application {
           if (data.choices && data.choices[0] && data.choices[0].message) {
             this.lastResponse = data.choices[0].message.content.trim()
             return this.lastResponse;
+            console.log(data.choices[0].message.content.trim())
           } else {
             console.error("Unexpected response structure:", data);
             return "An error occurred: unexpected response format.";
@@ -153,7 +154,7 @@ class MimirsCodexApp extends Application {
   addMessageToChat(sender, message) {
       const chatHistory = this.element.find("#chat-history");
       const messageClass = sender === "You" ? "user-message" : "ai-message";
-      const newMessage = `<p class="${messageClass}"><strong>${sender}:</strong> ${message}</p>`;
+      const newMessage = `<div class="${messageClass} ai-chat-bubble"><strong>${sender}:</strong> ${message}</div>`;
       chatHistory.append(newMessage);
       chatHistory.scrollTop(chatHistory[0].scrollHeight); // Scroll to bottom
   }

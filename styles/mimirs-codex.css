@@ -1,8 +1,8 @@
  
-.mimir-ui-content h2 {
-    font-size: 1.5em; /* Adjust font size if needed */
-    color: black; /* Use Foundry's color system if desired */
-}
+/*.mimir-ui-content h2 {
+    font-size: 1.5em;  Adjust font size if needed 
+    color: black; Use Foundry's color system if desired 
+}*/
 
 .mimir-chat-container {
     display: flex;
@@ -10,6 +10,20 @@
     height: 100%;
     padding: 15px;
     box-sizing: border-box;
+}
+
+.ai-chat-bubble {
+    max-width: 80%;
+    padding: 5px 10px;
+    border-radius: 15px;
+    margin: 10px 0;
+    font-size: 0.9em;
+    line-height: 1.4;
+    position: relative;
+    word-wrap: break-word;
+    max-height: calc(100% - 60px);
+    box-shadow: 0 0 3px;
+    background-color: #f0f0f0;
 }
 
 .chat-history {
@@ -42,9 +56,13 @@
 }
 
 .user-message {
-    text-align: right;
+    align-self: flex-end;
+    border: 1px solid #005f99;
+    margin-left: auto;
 }
 
 .ai-message {
-    text-align: left;
+    align-self: flex-start;
+    border: 1px solid #555;
+    margin-right: auto;
 }
