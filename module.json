@@ -14,6 +14,7 @@
       "scripts/settings.js" 
     ],
     "socket": true,
-    "flags": {}
+    "flags": {},
+    "download": "https://github.com/robert-mayer/mimir-codex/archive/main.zip"
   }
   
