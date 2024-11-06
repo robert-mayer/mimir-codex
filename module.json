@@ -8,7 +8,7 @@
     "compatibleCoreVersion": "11",
     "type": "module",
     "styles": ["styles/mimirs-codex.css"],
-    "manifest": "https://raw.githubusercontent.com/robert-mayer/mimir-codex/refs/heads/ChatGPT-Integration/module.json?token=GHSAT0AAAAAACZ632EC3WAJUMH4E2PJSITOZZLPULA",
+    "manifest": "https://raw.githubusercontent.com/robert-mayer/mimir-codex/refs/heads/ChatGPT-Integration/module.json",
     "esmodules": [
       "scripts/mimirs-codex.js",
       "scripts/settings.js" 
