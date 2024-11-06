@@ -5,10 +5,10 @@
     "version": "0.2.0",
     "author": "Ricky Bobby",
     "minimumCoreVersion": "10",
-    "compatibleCoreVersion": "11",
+    "compatibleCoreVersion": "12",
     "type": "module",
     "styles": ["styles/mimirs-codex.css"],
-    "manifest": "https://raw.githubusercontent.com/robert-mayer/mimir-codex/refs/heads/ChatGPT-Integration/module.json",
+    "manifest": "https://github.com/robert-mayer/mimir-codex/blob/main/module.json",
     "esmodules": [
       "scripts/mimirs-codex.js",
       "scripts/settings.js" 
