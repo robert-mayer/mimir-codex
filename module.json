@@ -8,7 +8,7 @@
     "compatibleCoreVersion": "12",
     "type": "module",
     "styles": ["styles/mimirs-codex.css"],
-    "manifest": "https://github.com/robert-mayer/mimir-codex/blob/main/module.json",
+    "manifest": "https://raw.githubusercontent.com/robert-mayer/mimir-codex/refs/heads/main/module.json",
     "esmodules": [
       "scripts/mimirs-codex.js",
       "scripts/settings.js" 
