@@ -8,6 +8,7 @@
     "compatibleCoreVersion": "11",
     "type": "module",
     "styles": ["styles/mimirs-codex.css"],
+    "manifest": "https://raw.githubusercontent.com/robert-mayer/mimir-codex/refs/heads/main/module.json?token=GHSAT0AAAAAACZ632EDBNASF3XKNPXZZSMAZZK643A",
     "esmodules": [
       "scripts/mimirs-codex.js",
       "scripts/settings.js" 
