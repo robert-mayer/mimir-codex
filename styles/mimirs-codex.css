@@ -1,17 +1,69 @@
  
-  #refresh-button {
-    border: 2px groove;
-    padding: 1px;
+/*.mimir-ui-content h2 {
+    font-size: 1.5em;  Adjust font size if needed 
+    color: black; Use Foundry's color system if desired 
+}*/
+
+.mimir-chat-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 15px;
+    box-sizing: border-box;
+}
+
+.ai-chat-bubble {
+    max-width: 80%;
+    padding: 5px 10px;
+    border-radius: 15px;
+    margin: 10px 0;
+    font-size: 0.9em;
+    line-height: 1.4;
+    position: relative;
+    word-wrap: break-word;
+    max-height: calc(100% - 60px);
+    box-shadow: 0 0 3px;
+    background-color: #f0f0f0;
+}
+
+.chat-history {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.chat-input-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: stretch;
+    padding-top: 10px;
+    border-top: 1px solid #444;
+}
+
+#user-input {
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #555;
+    height: 35px;
+}
+
+.action-button {
+    border-radius: 5px;
     cursor: pointer;
- } 
-    
-  .mimir-ui-content h2 {
-    font-size: 1.5em; /* Adjust font size if needed */
-    color: black; /* Use Foundry's color system if desired */
-  }
-  
-  #import-button {
-    border: 2px groove;
-    padding: 1px;
-    cursor: pointer;
-  }
+}
+
+.user-message {
+    align-self: flex-end;
+    border: 1px solid #005f99;
+    margin-left: auto;
+    text-align: right;
+}
+
+.ai-message {
+    align-self: flex-start;
+    border: 1px solid #555;
+    margin-right: auto;
+}

@@ -1,14 +1,18 @@
 {
     "name": "mimirs-codex",
     "title": "Mimir's Codex",
-    "description": "A module for sharing notes, tracking tasks, and coordinating chapter details between DMs.",
-    "version": "0.1.0",
+    "description": "A D&D assistant module for Foundry VTT",
+    "version": "0.2.0",
     "author": "Ricky Bobby",
     "minimumCoreVersion": "10",
     "compatibleCoreVersion": "11",
-    "scripts": ["scripts/mimirs-codex.js"],
+    "type": "module",
     "styles": ["styles/mimirs-codex.css"],
-    "esmodules": [],
+    "manifest": "https://raw.githubusercontent.com/robert-mayer/mimir-codex/refs/heads/ChatGPT-Integration/module.json",
+    "esmodules": [
+      "scripts/mimirs-codex.js",
+      "scripts/settings.js" 
+    ],
     "socket": true,
     "flags": {}
   }
