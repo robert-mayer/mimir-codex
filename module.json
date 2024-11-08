@@ -2,7 +2,7 @@
     "name": "mimirs-codex",
     "title": "Mimir's Codex",
     "description": "A D&D assistant module for Foundry VTT",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "author": "Ricky Bobby",
     "minimumCoreVersion": "10",
     "compatibleCoreVersion": "12",

@@ -92,14 +92,19 @@ class MimirsCodexApp extends Application {
           }
       });
       
-      html.find("#send-to-chat").click(() => {
+      html.find("#send-to-chat").click(async () => {
         if (this.lastResponse) {
+          const cardContent = await renderTemplate("modules/mimirs-codex/templates/mimir-chat-card.html", {
+            responseContent: this.lastResponse
+          });
+
           const mimirActor = game.actors.getName("Mimir");
+
           ChatMessage.create({ 
-            content: this.lastResponse, 
+            content: cardContent, 
             speaker: {
               alias: "Mimir",
-              actor: mimirActor,
+              actor: mimirActor ? mimirActor.id : null,
             },
             type: CONST.CHAT_MESSAGE_STYLES.IC,        
           });
@@ -107,8 +112,10 @@ class MimirsCodexApp extends Application {
           ui.notifications.warn("No response available to send to chat.");
         }
       });
+  }
 
-    }
+  
+
 
   async sendMessage(html) {
     const userInput = html.find("#user-input").val().trim();
@@ -138,7 +145,7 @@ class MimirsCodexApp extends Application {
       if (expertRole === "loreExpert") {
         systemMessage = "You are a knowledgeable D&D assistant with detailed knowledge of Greyhawk, Ghosts of Saltmarsh, and the custom campaign setting. Answer questions in a way that is consistent with Greyhawk lore and the story arcs of this campaign as well as avoiding meta references. Keep answers to 4 or 5 sentences.";
       } else if (expertRole === "ruleExpert") {
-        systemMessage = "You are an expert in D&D 5e rules, mechanics, and interpretations. Answer questions with precise rules clarifications and examples based on the D&D 5e ruleset.";
+        systemMessage = "You are an expert in D&D 5e rules, mechanics, and interpretations. Answer questions with precise rules clarifications and examples based on the D&D 5e ruleset. Use HTML tags such as <strong>, <em>, <ul>, <li>, <h3> to format your response.";
       }
       
 
@@ -172,7 +179,6 @@ class MimirsCodexApp extends Application {
           if (data.choices && data.choices[0] && data.choices[0].message) {
             this.lastResponse = data.choices[0].message.content.trim()
             return this.lastResponse;
-            console.log(data.choices[0].message.content.trim())
           } else {
             console.error("Unexpected response structure:", data);
             return "An error occurred: unexpected response format.";
@@ -186,7 +192,11 @@ class MimirsCodexApp extends Application {
   addMessageToChat(sender, message) {
       const chatHistory = this.element.find("#chat-history");
       const messageClass = sender === "You" ? "user-message" : "ai-message";
-      const newMessage = `<div class="${messageClass} ai-chat-bubble"><strong>${sender}:</strong> ${message}</div>`;
+      const newMessage = document.createElement('div');
+      newMessage.classList.add(messageClass, "ai-chat-bubble");
+
+      newMessage.innerHTML = `<strong>${sender}:</strong> ${message}`;
+      
       chatHistory.append(newMessage);
       chatHistory.scrollTop(chatHistory[0].scrollHeight); // Scroll to bottom
   }
