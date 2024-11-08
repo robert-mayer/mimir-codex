@@ -156,7 +156,34 @@ class MimirsCodexApp extends Application {
     
             Ensure that the NPC fits the campaign's culture, which includes seafaring, smugglers, and tension between factions like the Scarlet Brotherhood. Use HTML tags such as <strong>, <em>, <ul>, <li>, <h3> to format your response.
         `;
+      } else if (expertRole === "combatFlavor") {
+        const detailLevel = game.settings.get("mimirs-codex", "levelOfDetail");
+
+        if (detailLevel === "low") {
+            systemMessage = `
+                You are an expert at adding short combat flavor to D&D 5e combat events. Provide simple and brief descriptions for different combat actions such as attacks, critical hits, and near misses. 
+                Keep descriptions concise, avoiding excessive detail.
+            `;
+        } else if (detailLevel === "medium") {
+            systemMessage = `
+                You are an expert at adding engaging combat flavor to D&D 5e combat events. Generate combat descriptions with some flair, adding a sense of excitement and personality to attacks, critical hits, and near misses.
+                Keep the descriptions vivid but not overly long, adding details that bring the combat to life.
+            `;
+        } else if (detailLevel === "high") {
+            systemMessage = `
+                You are an expert at crafting vivid and dramatic combat flavor for D&D 5e combat events. Provide highly detailed and rich descriptions for attacks, critical hits, and near misses. 
+                Use evocative language to make the scene feel cinematic and exciting. Describe the emotions of the characters, the impact of the attacks, and the atmosphere of the battlefield.
+            `;
+        }
+      } else if (expertRole === "customContext") {
+        const customContext = game.settings.get("mimirs-codex", "customContext");
+        if (customContext.trim() === "") {
+          systemMessage = "Provide general D&D5e guidance.";
+        } else {
+        systemMessage = customContext;
+      }
     }
+      
     
       
 
