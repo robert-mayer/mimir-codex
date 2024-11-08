@@ -185,15 +185,15 @@ class MimirsCodexApp extends Application {
       
     
       
-
+      const openAIModel = game.settings.get("mimirs-codex", "openAIModel");
       const url = "https://api.openai.com/v1/chat/completions";
       const body = {
-          model: "gpt-4o-mini",
+          model: openAIModel,
           messages: [
               { role: "system", content: systemMessage },
               { role: "user", content: prompt }
           ],
-          max_tokens: 500,
+          max_tokens: 800,
           temperature: 0.5
       };
 

@@ -90,4 +90,33 @@ export function registerSettings() {
         restricted: true
     });
 
+    
+    game.settings.register("mimirs-codex", "openAIModel", {
+        name: "Open AI Model",
+        hint: "Choose which OpenAI model to use for Mimir's Codex. This affects response quality, speed, and cost.",
+        choices: {
+            "gpt-3.5-turbo": "gpt-3.5-turbo",
+            "gpt-4": "gpt-4",
+            "gpt-4-turbo": "gpt-4-turbo",
+            "gpt-4o": "gpt-4o",
+            "gpt-4o-mini": "gpt-4o-mini"
+        },
+        scope: "world",
+        config: true,
+        type: String,
+        default: "gpt-4o-mini",
+        restricted: true
+    });
+
 }
+
+Hooks.on("renderSettingsConfig", async (app, html) => {
+    // Find the setting group that contains your registered model setting
+    const openAISetting = html.find(`[name="mimirs-codex.openAIModel"]`).closest('.form-group');
+
+    // Create the HTML content for the model descriptions
+    const modelDescriptionsHtml = await renderTemplate("modules/mimirs-codex/templates/gpt-model-descriptions.html");
+
+    // Append the model descriptions after the model setting
+    openAISetting.after(modelDescriptionsHtml);
+});
