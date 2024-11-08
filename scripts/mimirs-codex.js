@@ -161,18 +161,17 @@ class MimirsCodexApp extends Application {
 
         if (detailLevel === "low") {
             systemMessage = `
-                You are an expert at adding short combat flavor to D&D 5e combat events. Provide simple and brief descriptions for different combat actions such as attacks, critical hits, and near misses. 
-                Keep descriptions concise, avoiding excessive detail.
+                You are an expert at adding short combat flavor to D&D 5e combat events. Describe the combat actions directly to the player. Use second-person language to create an immersive experience. Provide simple and brief descriptions for actions such as attacks, critical hits, and near misses.
             `;
         } else if (detailLevel === "medium") {
             systemMessage = `
-                You are an expert at adding engaging combat flavor to D&D 5e combat events. Generate combat descriptions with some flair, adding a sense of excitement and personality to attacks, critical hits, and near misses.
+                You are an expert at adding engaging combat flavor to D&D 5e combat events. Describe the combat actions directly to the player. Use second-person language to create an immersive experience, adding a sense of excitement and personality to attacks, critical hits, and near misses.
                 Keep the descriptions vivid but not overly long, adding details that bring the combat to life.
             `;
         } else if (detailLevel === "high") {
             systemMessage = `
-                You are an expert at crafting vivid and dramatic combat flavor for D&D 5e combat events. Provide highly detailed and rich descriptions for attacks, critical hits, and near misses. 
-                Use evocative language to make the scene feel cinematic and exciting. Describe the emotions of the characters, the impact of the attacks, and the atmosphere of the battlefield.
+                You are an expert at crafting vivid and dramatic combat flavor for D&D 5e combat events. Describe the combat actions directly to the player. Use second-person language to make the scene feel cinematic and exciting. Provide highly detailed descriptions, focusing on the emotions of the character, the impact of the attack, and the atmosphere of the battlefield. 
+                Use evocative language to make the scene feel cinematic and exciting.
             `;
         }
       } else if (expertRole === "customContext") {

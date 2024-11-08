@@ -66,7 +66,7 @@ export function registerSettings() {
 
     game.settings.register("mimirs-codex", "levelOfDetail", {
         name: "Level of Detail",
-        hint: "Choose how detailed you would like descriptions to be",
+        hint: "Choose how detailed you would like descriptions to be.",
         scope: "world",
         config: true,
         type: String,
