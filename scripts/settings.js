@@ -23,7 +23,8 @@ export function registerSettings() {
         type: String,
         choices: {
             "loreExpert": "Lore Expert",
-            "ruleExpert": "DnD5e Rule Expert"
+            "ruleExpert": "DnD5e Rule Expert",
+            "npcGenerator": "NPC Generator"
         },
         default: "loreExpert",
         restricted: true
@@ -32,7 +33,7 @@ export function registerSettings() {
 
     game.settings.register("mimirs-codex", "campaignOverview", {
         name: "Campaign Overview",
-        hint: "Enter a brief overview of the campaign to provide context for the AI.",
+        hint: "Future Development. No current functionality.",
         scope: "world",
         config: true,
         type: String,

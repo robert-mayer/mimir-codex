@@ -146,7 +146,18 @@ class MimirsCodexApp extends Application {
         systemMessage = "You are a knowledgeable D&D assistant with detailed knowledge of Greyhawk, Ghosts of Saltmarsh, and the custom campaign setting. Answer questions in a way that is consistent with Greyhawk lore and the story arcs of this campaign as well as avoiding meta references. Keep answers to 4 or 5 sentences.";
       } else if (expertRole === "ruleExpert") {
         systemMessage = "You are an expert in D&D 5e rules, mechanics, and interpretations. Answer questions with precise rules clarifications and examples based on the D&D 5e ruleset. Use HTML tags such as <strong>, <em>, <ul>, <li>, <h3> to format your response.";
-      }
+      } else if (expertRole === "npcGenerator") {
+        systemMessage = `
+            You are an expert at creating NPCs for a D&D campaign set in Saltmarsh, a coastal town in the world of Greyhawk. Generate a unique NPC with the following details:
+            - **Name**: Provide a fantasy-appropriate name.
+            - **Race**: Choose a race that fits in Greyhawk's setting, especially around Saltmarsh or any other area that is specified in the prompt.
+            - **Description**: Describe the NPC's appearance, personality, quirks, and their role in this world.
+            - **Secret**: Provide a secret the NPC is hiding that may be relevant to an adventure or intrigue.
+    
+            Ensure that the NPC fits the campaign's culture, which includes seafaring, smugglers, and tension between factions like the Scarlet Brotherhood. Use HTML tags such as <strong>, <em>, <ul>, <li>, <h3> to format your response.
+        `;
+    }
+    
       
 
       const url = "https://api.openai.com/v1/chat/completions";
