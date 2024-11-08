@@ -26,6 +26,38 @@ Hooks.on("renderSidebarTab", async (app, html) => {
   }
 });
 
+Hooks.once("ready", () => {
+  ensureMimirActorExists();
+});
+
+function ensureMimirActorExists() {
+  // Check if "Mimir" actor already exists
+  const mimirActor = game.actors.getName("Mimir");
+  if (mimirActor) return; // Exit if Mimir already exists
+
+  // Create the "Mimir" actor if not found
+  Actor.create({
+      name: "Mimir",
+      type: "npc", // Set the actor type; use "character" or "npc" depending on your setup
+      img: "modules/mimirs-codex/media/mimir-avatar-image.png", // Path to Mimir's avatar image
+      token: {
+          img: "modules/mimirs-codex/media/mimir-avatar-image.png", // Set token image if desired
+          name: "Mimir",
+          vision: false // Set vision settings if needed
+      },
+      permission: {
+        default: 0
+      },
+      flags: {
+          mimirsCodex: { createdByModule: true } // Optional flag to track that this actor was created by the module
+      }
+  }).then(actor => {
+      console.log(`Created new Mimir actor with ID: ${actor.id}`);
+  }).catch(error => {
+      console.error("Failed to create Mimir actor:", error);
+  });
+}
+
 class MimirsCodexApp extends Application {
   constructor(options = {}) {
     super(options);
@@ -62,14 +94,14 @@ class MimirsCodexApp extends Application {
       
       html.find("#send-to-chat").click(() => {
         if (this.lastResponse) {
+          const mimirActor = game.actors.getName("Mimir");
           ChatMessage.create({ 
             content: this.lastResponse, 
             speaker: {
               alias: "Mimir",
-              avatar: "modules/mimirs-codex/media/mimir-avatar-image.png"
+              actor: mimirActor,
             },
-            type: CONST.CHAT_MESSAGE_TYPES.IC,
-            
+            type: CONST.CHAT_MESSAGE_STYLES.IC,        
           });
         } else {
           ui.notifications.warn("No response available to send to chat.");
